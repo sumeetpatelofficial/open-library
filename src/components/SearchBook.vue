@@ -23,69 +23,12 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="container mt-3">
-    <p v-if="books.length">Total {{ count }} Results Found.</p>
-    <b-skeleton-wrapper :loading="loading">
-      <template #loading>
-        <b-card class="my-3">
-          <b-skeleton width="85%"></b-skeleton>
-          <b-skeleton width="55%"></b-skeleton>
-          <b-skeleton width="70%"></b-skeleton>
-        </b-card>
-        <b-card class="my-3">
-          <b-skeleton width="85%"></b-skeleton>
-          <b-skeleton width="55%"></b-skeleton>
-          <b-skeleton width="70%"></b-skeleton>
-        </b-card>
-        <b-card class="my-3">
-          <b-skeleton width="85%"></b-skeleton>
-          <b-skeleton width="55%"></b-skeleton>
-          <b-skeleton width="70%"></b-skeleton>
-        </b-card>
-      </template>
-
-      <div class="row my-3" v-if="books.length">
-        <div class="col-12" v-for="(author, i) in books" :key="i">
-          <div class="card mb-3">
-            <div class="row">
-              <div class="col-md-4">
-                <!-- <img src="..." alt="..."> -->
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <div>
-                    First publishing year
-                    <span class="badge badge-primary">{{
-                      author.first_publish_year
-                    }}</span>
-                  </div>
-                  <h5 class="card-title">{{ author.title }}</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">
-                    {{ author.title_suggest }}
-                  </h6>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row my-3" v-else-if="books.length > 0">
-        <div class="col-12">
-          Data Not Found !!!!
-        </div>
-      </div>
-      <div class="row my-3" v-else>
-        <div class="col-12">
-        {{ErrorMessage}}
-        </div>
-      </div>
-    </b-skeleton-wrapper>
-  </div>
+  </div>  
 </template>
 
 <script>
-import { defineComponent, defineEmits, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
+import {useBookStore} from "@/store/index"
 import axios from "axios";
 
 export default defineComponent({
@@ -100,9 +43,11 @@ export default defineComponent({
     const loading = ref(false);
     const count = ref(0);
     const ErrorMessage=ref("");
+    const stateSearchValue = useBookStore();
     // console.log('created');
 
     async function initSearch() {
+      stateSearchValue.$patch({searchBook:SearchValue.value})      
       loading.value = true;
       books.value = [];
       await setTimeout(() => {
@@ -116,6 +61,9 @@ export default defineComponent({
               ];
               loading.value = false;
               SearchValue.value = "";
+              stateSearchValue.$patch({books:books.value})
+              stateSearchValue.$patch({count:count.value})
+              this.$router.push('/search-result');
             }
           })
           .catch((e) => {

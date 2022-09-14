@@ -1,8 +1,11 @@
 import { defineStore } from "pinia";
 
-export default defineStore("main",{
+export const useBookStore = defineStore("book",{
   state:() =>({
-    books:[]
+    searchBook:'',
+    books:[], 
+    count:0, 
+    message:''
   }),
   getters:{
     
