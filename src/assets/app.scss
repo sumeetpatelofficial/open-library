@@ -26,8 +26,8 @@ h4 {
   background: rgb(235, 199, 232);
   background: linear-gradient(
     180deg,
-    rgba(235, 199, 232, 1) 0%,
-    rgba(160, 132, 202, 1) 100%
+    rgba(255, 241, 254, 1) 0%,
+    rgba(130, 105, 168, 1) 100%
   );
   display: flex;
   height: 100vh;
@@ -42,7 +42,7 @@ h4 {
 .btn-abs {
   position: relative;
   .btn {
-    height: calc(2em + 0.75rem + 3px);
+    height: calc(2em + 0.75rem + 6px);
     min-width: 130px;
     &.btn-primary {
       background: #0f3460;
@@ -61,7 +61,7 @@ h4 {
   padding-left: 5px;
   padding-right: 5px;
   margin-bottom: 0.5rem;
-  height: calc(2.5em + 0.75rem + 5px);
+  height: calc(2.5em + 0.75rem + 10px);
   background-color: #ffffff;
   border: 1px solid #dfdfdf;
   border-radius: 4px;
@@ -96,4 +96,69 @@ h4 {
 .error-text{
     font-size: 12px;
     color: #ffffff;
+}
+.trending-books{
+  position: relative;
+  ul{
+    list-style: none;
+    padding: 0;
+    display: flex;
+    li{
+      position: relative;
+      margin-right: 5px;
+      margin-top: 10px;
+      a{
+        position: relative;
+        text-decoration: none;
+        background-color: rgba($color: #ffffff, $alpha: 0.75);
+        color: #0f3460;
+        font-size: 13px;
+        padding: 3px 10px;
+        border-radius: 4px;
+        text-transform: capitalize;
+      }
+      &:hover{
+        a{
+          background-color: rgba($color: #ffffff, $alpha: 1.0);
+        }
+      }
+    }
+  }
+}
+
+.book-list{
+  position: relative;
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 30px;
+  .card{
+    position: relative;
+    border-color: transparent;
+    box-shadow: 0 35px 50px -30px rgba(0,0,0,0.2);
+    margin-bottom: 25px;
+    .card-body{
+      display: flex;
+      align-items: center;
+      .highlight{
+        position: relative;
+        flex: 0 0 80px;
+        width: 80px;
+        height: 80px;
+        text-align: center;
+        background-color: #0f3460;
+        line-height: 80px;
+        margin-right: 15px;
+        color: #ffffff;
+        border-radius: 50%;
+      }
+      .book-detail{
+        position: relative;
+        h5{
+          font-size: 18px;
+          margin-bottom: 0;
+        }
+      }
+    }    
+  }
 }

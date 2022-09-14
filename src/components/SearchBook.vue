@@ -7,7 +7,7 @@
           <div class="form-group">
             <b-form-input
               v-model="SearchValue"
-              placeholder="Enter Book Name"
+              placeholder="Enter Book Name to Search"
             ></b-form-input>
             <div class="btn-abs">
               <b-button
@@ -19,6 +19,14 @@
                 <span>Search</span></b-button
               >
             </div>
+          </div>
+          <div class="trending-books mt-5">
+            <h6 class="mb-0">The list of trending books</h6>
+            <ul>
+              <li v-for="book, bookIndex in trendingBooks" :key="bookIndex">
+                <b-link class="text-capitalise" @click="searchBook(book)">{{book}}</b-link>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -45,43 +53,55 @@ export default defineComponent({
     const ErrorMessage=ref("");
     const stateSearchValue = useBookStore();
     // console.log('created');
-
-    async function initSearch() {
-      stateSearchValue.$patch({searchBook:SearchValue.value})      
+    const trendingBooks=[
+      "It Ends With Us",
+      "power",
+      "the love hypothesis",
+      "Ugly Love",
+      "Reminders of Him",
+    ]
+    async function initSearch() {            
       loading.value = true;
       books.value = [];
       await setTimeout(() => {
-        axios
-          .get("http://openlibrary.org/search.json?title=" + SearchValue.value)
-          .then((response) => {
-            if (response.data) {
-              [books.value, count.value] = [
-                response.data.docs,
-                response.data.numFound,
-              ];
-              loading.value = false;
-              SearchValue.value = "";
-              stateSearchValue.$patch({books:books.value})
-              stateSearchValue.$patch({count:count.value})
-              this.$router.push('/search-result');
-            }
-          })
-          .catch((e) => {
-            if(e.code == "ERR_NETWORK"){
-              ErrorMessage.value = e.message
-            }
-            else{
-              ErrorMessage.value = e.message
-            }
-          })
-          .finally(() => {
-            loading.value = false;
-          });
+        this.searchBook(SearchValue.value)
       }, 3000);
     }
 
+    function searchBook(bookToSearch){
+      stateSearchValue.$patch({searchBook:bookToSearch})
+      axios
+        .get("http://openlibrary.org/search.json?title=" + bookToSearch)
+        .then((response) => {
+          if (response.data) {
+            [books.value, count.value] = [
+              response.data.docs,
+              response.data.numFound,
+            ];
+            loading.value = false;
+            SearchValue.value = "";
+            stateSearchValue.$patch({books:books.value})
+            stateSearchValue.$patch({count:count.value})
+            this.$router.push('/search-result');
+          }
+        })
+        .catch((e) => {
+          if(e.code == "ERR_NETWORK"){
+            ErrorMessage.value = e.message
+          }
+          else{
+            ErrorMessage.value = e.message
+          }
+        })
+        .finally(() => {
+          loading.value = false;
+        });
+    }
+
     onMounted(()=>{
-      // console.log('mounted')
+      stateSearchValue.$patch({searchBook:""}) 
+      stateSearchValue.$patch({books:[]})
+      stateSearchValue.$patch({count:0}) 
     })
 
     return {
@@ -90,7 +110,9 @@ export default defineComponent({
       loading,
       count,
       initSearch,
-      ErrorMessage
+      searchBook,
+      ErrorMessage,
+      trendingBooks
     };    
   },  
 });
