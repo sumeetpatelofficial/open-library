@@ -51,8 +51,7 @@ export default defineComponent({
     const loading = ref(false);
     const count = ref(0);
     const ErrorMessage=ref("");
-    const stateSearchValue = useBookStore();
-    // console.log('created');
+    const stateSearchValue = useBookStore();    
     const trendingBooks=[
       "It Ends With Us",
       "power",
@@ -60,12 +59,15 @@ export default defineComponent({
       "Ugly Love",
       "Reminders of Him",
     ]
+
+    // console.log('created');
+
     async function initSearch() {            
       loading.value = true;
       books.value = [];
       await setTimeout(() => {
         this.searchBook(SearchValue.value)
-      }, 3000);
+      }, 2000);
     }
 
     function searchBook(bookToSearch){
