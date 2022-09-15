@@ -12,25 +12,31 @@
     <div class="book-list">          
       <b-skeleton-wrapper :loading="loading">
         <template #loading>
-          <b-card class="my-3">
-            <b-skeleton width="85%"></b-skeleton>
-            <b-skeleton width="55%"></b-skeleton>
-            <b-skeleton width="70%"></b-skeleton>
-          </b-card>
-          <b-card class="my-3">
-            <b-skeleton width="85%"></b-skeleton>
-            <b-skeleton width="55%"></b-skeleton>
-            <b-skeleton width="70%"></b-skeleton>
-          </b-card>
-          <b-card class="my-3">
-            <b-skeleton width="85%"></b-skeleton>
-            <b-skeleton width="55%"></b-skeleton>
-            <b-skeleton width="70%"></b-skeleton>
-          </b-card>
+          <div class="my-3 card">
+            <div class="card-body flex-column align-items-start">
+              <b-skeleton width="85%"></b-skeleton>
+              <b-skeleton width="55%"></b-skeleton>
+              <b-skeleton width="70%"></b-skeleton>
+            </div>
+          </div>
+          <div class="my-3 card">
+            <div class="card-body flex-column align-items-start">
+              <b-skeleton width="85%"></b-skeleton>
+              <b-skeleton width="55%"></b-skeleton>
+              <b-skeleton width="70%"></b-skeleton>
+            </div>
+          </div>
+          <div class="my-3 card">
+            <div class="card-body flex-column align-items-start">
+              <b-skeleton width="85%"></b-skeleton>
+              <b-skeleton width="55%"></b-skeleton>
+              <b-skeleton width="70%"></b-skeleton>
+            </div>
+          </div>
         </template>
 
         <div class="row" v-if="books.length">
-          <div class="col-6" v-for="(author, i) in books" :key="i">
+          <div class="col-md-6 col-sm-12" v-for="(author, i) in books" :key="i">
             <div class="card">
               <div class="card-body">
                 <div class="highlight">

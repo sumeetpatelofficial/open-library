@@ -2,7 +2,7 @@
   <div class="page-container-search">
     <div class="container">
       <div class="row">
-        <div class="col-8">
+        <div class="col-md-8">
           <h3 class="search-heading">{{name}}</h3>
           <div class="form-group">
             <b-form-input
